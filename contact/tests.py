@@ -31,7 +31,7 @@ class ContactFormTests(TestCase):
             'body': 'Hello, World!',
         })
         self.assertEqual(response.status_code, 200)
-        self.assertFormError(response, 'form', 'email', ['Enter a valid email address.'])
+        self.assertFormError(response.context['form'], 'email', ['Enter a valid email address.'])
 
     @override_settings(AKISMET_API_KEY='')  # Disable Akismet in tests
     def test_without_akismet(self):
@@ -52,7 +52,7 @@ class ContactFormTests(TestCase):
             'message_subject': 'Hello',
             'body': 'Hello, World!',
         })
-        self.assertFormError(response, 'form', 'name', ['This field is required.'])
+        self.assertFormError(response.context['form'], 'name', ['This field is required.'])
 
     @skipIf(not has_network_connection, 'Requires a network connection')
     def test_akismet_detect_spam(self):

@@ -46,8 +46,8 @@ class BaseContactForm(ContactForm):
 
                 akismet_data = {
                     'user_ip': self.request.META.get('REMOTE_ADDR', ''),
-                    'user_agent': self.request.META.get('HTTP_USER_AGENT', ''),
-                    'referrer': self.request.META.get('HTTP_REFERER', ''),
+                    'user_agent': self.request.headers.get('User-Agent', ''),
+                    'referrer': self.request.headers.get('Referer', ''),
                     'comment_content': force_bytes(self.cleaned_data['body']),
                     'comment_author': self.cleaned_data.get('name', ''),
                     'comment_author_email': self.cleaned_data.get('email', ''),
